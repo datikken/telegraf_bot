@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const BOT_TOKEN = process.env.BOT_TOKEN;
 const Telegraf = require("telegraf");
 const bot = new Telegraf(BOT_TOKEN);
@@ -17,5 +19,10 @@ Send any message and i will copy it
 bot.on("message", (ctx) => {
     ctx.telegram.sendCopy(ctx.chat.id, ctx.message);
 });
-
-export default bot;
+bot.launch()
+    .then((res) => {
+        console.log("Run");
+    })
+    .catch((err) => {
+        comsole.log(err);
+    });
