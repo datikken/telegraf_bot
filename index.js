@@ -1,26 +1,22 @@
-const BOT_TOKEN = '1598375531:AAGo2wE1BXm38tKbipBc3AqKsfrdUNftH4k';
-const Telegraf = require("telegraf");
-const bot = new Telegraf(BOT_TOKEN);
+const express = require('express')
+const bot = require('./bot');
 
-bot.start((ctx) => {
-    ctx.reply(`
-Hello! Its echo bot!!!
-`);
-});
+function startServer(bot) {
+    let app = express();
 
-bot.help((ctx) => {
-    ctx.reply(`
-Send any message and i will copy it
-  `);
-});
+    // app.use(express.static(path.join(__dirname, 'public')));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    // app.set('views', path.join(__dirname, './views'));
+    // app.set('view engine', 'ejs');
 
-bot.on("message", (ctx) => {
-    ctx.telegram.sendCopy(ctx.chat.id, ctx.message);
-});
-bot.launch()
-    .then((res) => {
-        console.log("Run");
-    })
-    .catch((err) => {
-        comsole.log(err);
+    // app.get('/', homeController);
+    // app.post('/globalmessage', globalMessageController);
+
+    let port = process.env.PORT || 5000;
+    app.listen(port, function () {
+        console.log(`Server started at ${port}`);
     });
+}
+
+startServer(bot);
