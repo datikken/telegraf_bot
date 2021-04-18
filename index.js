@@ -1,12 +1,7 @@
 require('dotenv').config();
+require('./bot');
 
 const express = require('express');
-const bot = require('./bot');
-
 const app = express();
-
-app.get('/',function(req,res) {
-    res.send('Hello nodelebot!')
-});
 
 app.listen(process.env.PORT || 3000, () => console.log(`Started`))
