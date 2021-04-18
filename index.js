@@ -1,24 +1,26 @@
-require('dotenv').config()
-const Telegraf = require(`telegraf`)
+const BOT_TOKEN = '1598375531:AAGo2wE1BXm38tKbipBc3AqKsfrdUNftH4k';
+const Telegraf = require("telegraf");
+const bot = new Telegraf(BOT_TOKEN);
 
-const { BOT_TOKEN, URL } = process.env
-const PORT = process.env.PORT || 5000
-const bot = new Telegraf(BOT_TOKEN)
+bot.start((ctx) => {
+	ctx.reply(`
+Hello! Its echo bot!!!
+`);
+});
 
-bot.start((ctx) => ctx.reply(`Welcome!`))
-bot.help((ctx) => ctx.reply(`Send me a sticker`))
-bot.on(`sticker`, (ctx) => ctx.reply(`👍`))
-bot.hears(`hi`, (ctx) => ctx.reply(`Hey there`))
-bot.command('env', (ctx) => {
-	ctx.reply(`ENV is ${process.env.NODE_ENV}`)
-})
-if (process.env.NODE_ENV === 'production') {
-	bot.telegram.setWebhook(`${URL}/bot${BOT_TOKEN}`)
-	bot.startWebhook(`/bot${BOT_TOKEN}`, null, PORT)
-	console.log('Started with webhook')
-} else {
-	bot
-		.launch()
-		.then((res) => console.log(`Launched at ${new Date()}`))
-		.catch((err) => console.log(`ERROR at launch:`, err))
-}
+bot.help((ctx) => {
+	ctx.reply(`
+Send any message and i will copy it
+  `);
+});
+
+bot.on("message", (ctx) => {
+	ctx.telegram.sendCopy(ctx.chat.id, ctx.message);
+});
+bot.launch()
+	.then((res) => {
+		console.log("Run");
+	})
+	.catch((err) => {
+		comsole.log(err);
+	});
