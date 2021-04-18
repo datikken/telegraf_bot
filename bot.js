@@ -17,10 +17,5 @@ Send any message and i will copy it
 bot.on("message", (ctx) => {
     ctx.telegram.sendCopy(ctx.chat.id, ctx.message);
 });
-bot.launch()
-    .then((res) => {
-        console.log("Run");
-    })
-    .catch((err) => {
-        comsole.log(err);
-    });
+
+export default bot;
